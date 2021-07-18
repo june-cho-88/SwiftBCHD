@@ -4,3 +4,4 @@ public struct SwiftBCHD {
     public init() {
     }
 }
+
