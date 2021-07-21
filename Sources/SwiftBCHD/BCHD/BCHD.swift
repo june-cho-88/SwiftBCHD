@@ -165,6 +165,7 @@ extension BCHD {
 
 // MARK: - {Subscribe} Requests
 
+@available(iOSApplicationExtension 13.0, *)
 @available(macOSApplicationExtension 10.15, *)
 extension BCHD {
     func subscribeBlocks(blockSubject: PassthroughSubject<Block.Header, Never>) async {
@@ -211,7 +212,7 @@ extension BCHD {
 
 // MARK: - {Submit} Requests
 extension BCHD {
-    func submit(rawTransaction: Data) throws -> Pb_SubmitTransactionResponse {
+    func submit(rawTransaction: Data) async throws -> Pb_SubmitTransactionResponse {
         var request = Pb_SubmitTransactionRequest()
         request.transaction = rawTransaction
         let response = try client.submitTransaction(request, callOptions: .none).response.wait()

@@ -222,13 +222,20 @@ extension SwiftBCHD {
     
     // MARK: - {Subscribe}
     
+    @available(iOSApplicationExtension 13.0, *)
     @available(macOSApplicationExtension 10.15, *)
     public func subscribeBlocks(blockSubject: PassthroughSubject<Block.Header, Never>) async {
         await bchd.subscribeBlocks(blockSubject: blockSubject)
     }
     
+    @available(iOSApplicationExtension 13.0, *)
     @available(macOSApplicationExtension 10.15, *)
     public func subscribeTransactions(unconfirmedTransactionSubject: PassthroughSubject<UnconfirmedTransaction, Never>) async {
         await bchd.subscribeTransactions(unconfirmedTransactionSubject: unconfirmedTransactionSubject)
+    }
+    
+    // MARK: - {Submit}
+    public func submit(rawTransaction: Data) async throws {
+        _ = try await bchd.submit(rawTransaction: rawTransaction)
     }
 }
