@@ -1,7 +1,7 @@
 import Foundation
 
 public struct MerkleProof {
-    let header: Block.Header
-    let transactionHashes: [Data]
-    let flags: Data
+    public let header: Block.Header
+    public let transactionHashes: [Data]
+    public let flags: Data
 }

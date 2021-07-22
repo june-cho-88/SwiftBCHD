@@ -1,8 +1,8 @@
 import Foundation
 
 public struct BlockInformation {
-    let header: Block.Header
-    let nextBlockHash: Data
-    let size: Int32
-    let medianTime: Int64
+    public let header: Block.Header
+    public let nextBlockHash: Data
+    public let size: Int32
+    public let medianTime: Int64
 }
