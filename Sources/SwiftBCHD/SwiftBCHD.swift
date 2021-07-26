@@ -18,6 +18,7 @@ public struct SwiftBCHD {
 
 extension SwiftBCHD {
     // MARK: - {Get}
+    
     public func getBlockchainInformation() async throws -> BlockchainInformation {
         let blockchainInformation = try await bchd.getBlockchainInformation()
         
@@ -229,19 +230,34 @@ extension SwiftBCHD {
     
     // MARK: - {Subscribe}
     
-    @available(iOSApplicationExtension 13.0, *)
-    @available(macOSApplicationExtension 10.15, *)
     public func subscribeBlocks(to publisher: PassthroughSubject<Block.Header, Never>) async throws {
         _ = try await bchd.subscribeBlocks(to: publisher)
     }
     
-    @available(iOSApplicationExtension 13.0, *)
-    @available(macOSApplicationExtension 10.15, *)
+    public func subscribeBlocks(execute: @escaping (Block.Header) -> Void) async throws -> AnyCancellable {
+        let blockPublisher: PassthroughSubject<Block.Header, Never> = .init()
+        let subscription = blockPublisher.sink(receiveValue: execute)
+        
+        _ = try await bchd.subscribeBlocks(to: blockPublisher)
+        
+        return subscription
+    }
+    
     public func subscribeTransactions(to publisher: PassthroughSubject<UnconfirmedTransaction, Never>) async throws {
         _ = try await bchd.subscribeTransactions(to: publisher)
     }
     
+    public func subscribeTransactions(execute: @escaping (UnconfirmedTransaction) -> Void) async throws -> AnyCancellable {
+        let transactionPublisher: PassthroughSubject<UnconfirmedTransaction, Never> = .init()
+        let subscription = transactionPublisher.sink(receiveValue: execute)
+        
+        _ = try await bchd.subscribeTransactions(to: transactionPublisher)
+        
+        return subscription
+    }
+    
     // MARK: - {Submit}
+    
     public func submit(rawTransaction: Data) async throws {
         _ = try await bchd.submit(rawTransaction: rawTransaction)
     }

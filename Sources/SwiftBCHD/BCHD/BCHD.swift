@@ -172,8 +172,6 @@ extension BCHD {
 
 // MARK: - {Subscribe} Requests
 
-@available(iOSApplicationExtension 13.0, *)
-@available(macOSApplicationExtension 10.15, *)
 extension BCHD {
     func subscribeBlocks(to publisher: PassthroughSubject<Block.Header, Never>) async throws -> GRPCStatus {
         let request = Pb_SubscribeBlocksRequest()
