@@ -5,12 +5,19 @@ import GRPC
 
 struct BCHD {
     private let client: Pb_bchrpcClient
+    let eventLoopGroup: EventLoopGroup
     
-    init(host: String, port: Int) {
+    init(host: String, port: Int, on eventLoopGroup: EventLoopGroup) {
+        self.eventLoopGroup = eventLoopGroup
         self.client = .init(channel: ClientConnection
                                 .usingTLS(with: .makeClientConfigurationBackedByNIOSSL(),
-                                          on: MultiThreadedEventLoopGroup(numberOfThreads: 1))
+                                          on: self.eventLoopGroup)
                                 .connect(host: host, port: port))
+    }
+    
+    func disconnect() throws {
+        _ = self.client.channel.close()
+        try self.eventLoopGroup.syncShutdownGracefully()
     }
 }
 
@@ -168,45 +175,39 @@ extension BCHD {
 @available(iOSApplicationExtension 13.0, *)
 @available(macOSApplicationExtension 10.15, *)
 extension BCHD {
-    func subscribeBlocks(blockSubject: PassthroughSubject<Block.Header, Never>) async {
+    func subscribeBlocks(publisher: PassthroughSubject<Block.Header, Never>) async throws -> GRPCStatus {
         let request = Pb_SubscribeBlocksRequest()
         
-        do {
-            _ = try client.subscribeBlocks(request, callOptions: .none) { notification in
-                let information = notification.blockInfo
-                
-                blockSubject.send(.init(hash: information.hash,
-                                        version: information.version,
-                                        previousBlockHash: information.previousBlock,
-                                        merkleRoot: information.merkleRoot,
-                                        timestamp: information.timestamp,
-                                        targetBits: information.bits,
-                                        miningField: information.nonce,
-                                        confirmations: information.confirmations,
-                                        difficulty: information.difficulty))
-            }.status.wait()
-        }
-        catch {
-            print(error)
-        }
+        let status = try client.subscribeBlocks(request, callOptions: .none) { notification in
+            let information = notification.blockInfo
+            
+            publisher.send(.init(hash: information.hash,
+                                 version: information.version,
+                                 previousBlockHash: information.previousBlock,
+                                 merkleRoot: information.merkleRoot,
+                                 timestamp: information.timestamp,
+                                 targetBits: information.bits,
+                                 miningField: information.nonce,
+                                 confirmations: information.confirmations,
+                                 difficulty: information.difficulty))
+        }.status.wait()
+        
+        return status
     }
     
-    func subscribeTransactions(unconfirmedTransactionSubject: PassthroughSubject<UnconfirmedTransaction, Never>) async {
+    func subscribeTransactions(publisher: PassthroughSubject<UnconfirmedTransaction, Never>) async throws -> GRPCStatus {
         var request = Pb_SubscribeTransactionsRequest()
         
         request.subscribe.allTransactions = true
         request.includeMempool = true
         
-        do {
-            _ = try client.subscribeTransactions(request, callOptions: .none) { notification in
-                let unconfirmed = notification.unconfirmedTransaction
-                
-                unconfirmedTransactionSubject.send(.init(bchdMempoolTransaction: unconfirmed))
-            }.status.wait()
-        }
-        catch {
-            print(error)
-        }
+        let status = try client.subscribeTransactions(request, callOptions: .none) { notification in
+            let unconfirmed = notification.unconfirmedTransaction
+            
+            publisher.send(.init(bchdMempoolTransaction: unconfirmed))
+        }.status.wait()
+        
+        return status
     }
 }
 

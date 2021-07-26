@@ -1,11 +1,18 @@
 import Foundation
 import Combine
+import NIO
 
 public struct SwiftBCHD {
     private let bchd: BCHD
+    private let eventLoopGroup: EventLoopGroup
     
-    public init(host: String, port: Int) {
-        self.bchd = .init(host: host, port: port)
+    public init(host: String, port: Int, on eventLoopGroup: EventLoopGroup) {
+        self.eventLoopGroup = eventLoopGroup
+        self.bchd = .init(host: host, port: port, on: eventLoopGroup)
+    }
+    
+    public func disconnect() throws {
+        try self.bchd.disconnect()
     }
 }
 
@@ -224,14 +231,14 @@ extension SwiftBCHD {
     
     @available(iOSApplicationExtension 13.0, *)
     @available(macOSApplicationExtension 10.15, *)
-    public func subscribeBlocks(blockSubject: PassthroughSubject<Block.Header, Never>) async {
-        await bchd.subscribeBlocks(blockSubject: blockSubject)
+    public func subscribeBlocks(blockSubject: PassthroughSubject<Block.Header, Never>) async throws {
+        _ = try await bchd.subscribeBlocks(publisher: blockSubject)
     }
     
     @available(iOSApplicationExtension 13.0, *)
     @available(macOSApplicationExtension 10.15, *)
-    public func subscribeTransactions(unconfirmedTransactionSubject: PassthroughSubject<UnconfirmedTransaction, Never>) async {
-        await bchd.subscribeTransactions(unconfirmedTransactionSubject: unconfirmedTransactionSubject)
+    public func subscribeTransactions(unconfirmedTransactionSubject: PassthroughSubject<UnconfirmedTransaction, Never>) async throws {
+        _ = try await bchd.subscribeTransactions(publisher: unconfirmedTransactionSubject)
     }
     
     // MARK: - {Submit}
