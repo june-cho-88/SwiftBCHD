@@ -231,14 +231,14 @@ extension SwiftBCHD {
     
     @available(iOSApplicationExtension 13.0, *)
     @available(macOSApplicationExtension 10.15, *)
-    public func subscribeBlocks(blockSubject: PassthroughSubject<Block.Header, Never>) async throws {
-        _ = try await bchd.subscribeBlocks(publisher: blockSubject)
+    public func subscribeBlocks(to publisher: PassthroughSubject<Block.Header, Never>) async throws {
+        _ = try await bchd.subscribeBlocks(to: publisher)
     }
     
     @available(iOSApplicationExtension 13.0, *)
     @available(macOSApplicationExtension 10.15, *)
-    public func subscribeTransactions(unconfirmedTransactionSubject: PassthroughSubject<UnconfirmedTransaction, Never>) async throws {
-        _ = try await bchd.subscribeTransactions(publisher: unconfirmedTransactionSubject)
+    public func subscribeTransactions(to publisher: PassthroughSubject<UnconfirmedTransaction, Never>) async throws {
+        _ = try await bchd.subscribeTransactions(to: publisher)
     }
     
     // MARK: - {Submit}

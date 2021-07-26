@@ -175,7 +175,7 @@ extension BCHD {
 @available(iOSApplicationExtension 13.0, *)
 @available(macOSApplicationExtension 10.15, *)
 extension BCHD {
-    func subscribeBlocks(publisher: PassthroughSubject<Block.Header, Never>) async throws -> GRPCStatus {
+    func subscribeBlocks(to publisher: PassthroughSubject<Block.Header, Never>) async throws -> GRPCStatus {
         let request = Pb_SubscribeBlocksRequest()
         
         let status = try client.subscribeBlocks(request, callOptions: .none) { notification in
@@ -195,7 +195,7 @@ extension BCHD {
         return status
     }
     
-    func subscribeTransactions(publisher: PassthroughSubject<UnconfirmedTransaction, Never>) async throws -> GRPCStatus {
+    func subscribeTransactions(to publisher: PassthroughSubject<UnconfirmedTransaction, Never>) async throws -> GRPCStatus {
         var request = Pb_SubscribeTransactionsRequest()
         
         request.subscribe.allTransactions = true
