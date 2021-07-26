@@ -6,7 +6,7 @@ public struct SwiftBCHD {
     private let bchd: BCHD
     private let eventLoopGroup: EventLoopGroup
     
-    public init(host: String, port: Int, on eventLoopGroup: EventLoopGroup) {
+    public init(host: String, port: Int, on eventLoopGroup: EventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)) {
         self.eventLoopGroup = eventLoopGroup
         self.bchd = .init(host: host, port: port, on: eventLoopGroup)
     }
