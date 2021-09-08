@@ -75,7 +75,14 @@ extension BCHD {
         return response
     }
     
-    func get2000Headers(above height: Int32) async throws -> Pb_GetHeadersResponse {
+    func getBlockHeaders() async throws -> Pb_GetHeadersResponse {
+        var request = Pb_GetHeadersRequest()
+        request.blockLocatorHashes
+        let response = try client.getHeaders(request, callOptions: .none).response.wait()
+        return response
+    }
+    
+    func get2000BlockHeaders(above height: Int32) async throws -> Pb_GetHeadersResponse {
         var request = Pb_GetHeadersRequest()
         request.blockLocatorHashes = [try await getBlock(of: height).block.info.hash]
         let response = try client.getHeaders(request, callOptions: .none).response.wait()
@@ -179,15 +186,12 @@ extension BCHD {
         let status = try client.subscribeBlocks(request, callOptions: .none) { notification in
             let information = notification.blockInfo
             
-            publisher.send(.init(hash: information.hash,
-                                 version: information.version,
+            publisher.send(.init(version: information.version,
                                  previousBlockHash: information.previousBlock,
                                  merkleRoot: information.merkleRoot,
                                  timestamp: information.timestamp,
                                  targetBits: information.bits,
-                                 miningField: information.nonce,
-                                 confirmations: information.confirmations,
-                                 difficulty: information.difficulty))
+                                 miningField: information.nonce))
         }.status.wait()
         
         return status

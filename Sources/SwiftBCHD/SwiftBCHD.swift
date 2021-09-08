@@ -19,7 +19,7 @@ public struct SwiftBCHD {
 extension SwiftBCHD {
     // MARK: - {Get}
     
-    public func getBlockchainInformation() async throws -> BlockchainInformation {
+    public func getBlockchain() async throws -> Blockchain {
         let blockchainInformation = try await bchd.getBlockchainInformation()
         
         return .init(lastBlockHeight: blockchainInformation.bestHeight,
@@ -29,60 +29,54 @@ extension SwiftBCHD {
                      hasFullTransactionIndex: blockchainInformation.txIndex)
     }
     
-    public func getBlockInformation(of hash: Data) async throws -> BlockInformation {
+    public func getBlockHeader(of hash: Data) async throws -> Block.Header {
         let blockInformation = try await bchd.getBlockInformation(of: hash).info
         
-        return .init(header: .init(hash: blockInformation.hash,
-                                   version: blockInformation.version,
-                                   previousBlockHash: blockInformation.previousBlock,
-                                   merkleRoot: blockInformation.merkleRoot,
-                                   timestamp: blockInformation.timestamp,
-                                   targetBits: blockInformation.bits,
-                                   miningField: blockInformation.nonce,
-                                   confirmations: blockInformation.confirmations,
-                                   difficulty: blockInformation.difficulty),
-                     nextBlockHash: blockInformation.nextBlockHash,
-                     size: blockInformation.size,
-                     medianTime: blockInformation.medianTime)
+        return .init(version: blockInformation.version,
+                     previousBlockHash: blockInformation.previousBlock,
+                     merkleRoot: blockInformation.merkleRoot,
+                     timestamp: blockInformation.timestamp,
+                     targetBits: blockInformation.bits,
+                     miningField: blockInformation.nonce)
     }
     
     public func getBlock(of hash: Data) async throws -> Block {
         let block = try await bchd.getBlock(of: hash).block
         let information = block.info
-        let transactionHashes = block.transactionData
+        let transactionHashes = block.transactionData.map {$0.transactionHash}
         
-        return .init(information: .init(header: .init(hash: information.hash,
-                                                      version: information.version,
-                                                      previousBlockHash: information.previousBlock,
-                                                      merkleRoot: information.merkleRoot,
-                                                      timestamp: information.timestamp,
-                                                      targetBits: information.bits,
-                                                      miningField: information.nonce,
-                                                      confirmations: information.confirmations,
-                                                      difficulty: information.difficulty),
-                                        nextBlockHash: information.nextBlockHash,
-                                        size: information.size,
-                                        medianTime: information.medianTime),
-                     transactionHashes: transactionHashes.map {$0.transactionHash})
+        return .init(hash: information.hash,
+                     header: .init(version: information.version,
+                                   previousBlockHash: information.previousBlock,
+                                   merkleRoot: information.merkleRoot,
+                                   timestamp: information.timestamp,
+                                   targetBits: information.bits,
+                                   miningField: information.nonce),
+                     transactionHashes: transactionHashes,
+                     confirmations: information.confirmations,
+                     difficulty: information.difficulty,
+                     medianTime: information.medianTime,
+                     size: information.size,
+                     nextBlockHash: information.nextBlockHash)
     }
     public func getBlock(of height: Int32) async throws -> Block {
         let block = try await bchd.getBlock(of: height).block
         let information = block.info
-        let transactionHashes = block.transactionData
+        let transactionHashes = block.transactionData.map {$0.transactionHash}
         
-        return .init(information: .init(header: .init(hash: information.hash,
-                                                      version: information.version,
-                                                      previousBlockHash: information.previousBlock,
-                                                      merkleRoot: information.merkleRoot,
-                                                      timestamp: information.timestamp,
-                                                      targetBits: information.bits,
-                                                      miningField: information.nonce,
-                                                      confirmations: information.confirmations,
-                                                      difficulty: information.difficulty),
-                                        nextBlockHash: information.nextBlockHash,
-                                        size: information.size,
-                                        medianTime: information.medianTime),
-                     transactionHashes: transactionHashes.map {$0.transactionHash})
+        return .init(hash: information.hash,
+                     header: .init(version: information.version,
+                                   previousBlockHash: information.previousBlock,
+                                   merkleRoot: information.merkleRoot,
+                                   timestamp: information.timestamp,
+                                   targetBits: information.bits,
+                                   miningField: information.nonce),
+                     transactionHashes: transactionHashes,
+                     confirmations: information.confirmations,
+                     difficulty: information.difficulty,
+                     medianTime: information.medianTime,
+                     size: information.size,
+                     nextBlockHash: information.nextBlockHash)
     }
     
     public func getRawBlock(of hash: Data) async throws -> Data {
@@ -103,33 +97,27 @@ extension SwiftBCHD {
         return blockFilter.filter
     }
     
-    public func get2000Headers(above height: Int32) async throws -> [Block.Header] {
-        let headers = try await bchd.get2000Headers(above: height)
+    public func get2000BlockHeaders(above height: Int32) async throws -> [Block.Header] {
+        let headers = try await bchd.get2000BlockHeaders(above: height)
         
-        return headers.headers.map { Block.Header(hash: $0.hash,
-                                                  version: $0.version,
+        return headers.headers.map { Block.Header(version: $0.version,
                                                   previousBlockHash: $0.previousBlock,
                                                   merkleRoot: $0.merkleRoot,
                                                   timestamp: $0.timestamp,
                                                   targetBits: $0.bits,
-                                                  miningField: $0.nonce,
-                                                  confirmations: $0.confirmations,
-                                                  difficulty: $0.difficulty) }
+                                                  miningField: $0.nonce) }
     }
     
     public func getMerkleProof(of transactionHash: Data) async throws -> MerkleProof {
         let merkleProof = try await bchd.getMerkleProof(of: transactionHash)
         let header = merkleProof.block
         
-        return .init(header: .init(hash: header.hash,
-                                   version: header.version,
+        return .init(header: .init(version: header.version,
                                    previousBlockHash: header.previousBlock,
                                    merkleRoot: header.merkleRoot,
                                    timestamp: header.timestamp,
                                    targetBits: header.bits,
-                                   miningField: header.nonce,
-                                   confirmations: header.confirmations,
-                                   difficulty: header.difficulty),
+                                   miningField: header.nonce),
                      transactionHashes: merkleProof.hashes,
                      flags: merkleProof.flags)
     }

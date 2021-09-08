@@ -1,19 +1,22 @@
 import Foundation
 
 public struct Block {
-    public let information: BlockInformation
-    public var header: Block.Header { self.information.header }
-    public let transactionHashes: [Data]
+    public let hash: Data
+    public let header: Block.Header
+    public let transactionHashes: [Data]?
+    
+    public let confirmations: Int32
+    public let difficulty: Double
+    public let medianTime: Int64
+    public let size: Int32
+    public let nextBlockHash: Data
     
     public struct Header {
-        let hash: Data
-        let version: Int32
-        let previousBlockHash: Data
-        let merkleRoot: Data
-        let timestamp: Int64
-        let targetBits: UInt32
-        let miningField: UInt32
-        let confirmations: Int32
-        let difficulty: Double
+        public let version: Int32
+        public let previousBlockHash: Data
+        public let merkleRoot: Data
+        public let timestamp: Int64
+        public let targetBits: UInt32
+        public let miningField: UInt32
     }
 }

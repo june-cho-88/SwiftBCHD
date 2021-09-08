@@ -1,6 +1,6 @@
 import Foundation
 
-public struct BlockchainInformation {
+public struct Blockchain {
     public let lastBlockHeight: Int32
     public let lastBlockHash: Data
     public let difficulty: Double
