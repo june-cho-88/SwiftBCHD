@@ -16,9 +16,8 @@ public struct SwiftBCHD {
     }
 }
 
+// MARK: - {Get}
 extension SwiftBCHD {
-    // MARK: - {Get}
-    
     public func getBlockchain() async throws -> Blockchain {
         let blockchainInformation = try await bchd.getBlockchainInformation()
         
@@ -215,9 +214,10 @@ extension SwiftBCHD {
         
         return unspentOutputs.map { Transaction.UnspentOutput(bchdUnspentOutput: $0) }
     }
-    
-    // MARK: - {Subscribe}
-    
+}
+
+// MARK: - {Subscribe}
+extension SwiftBCHD {
     public func subscribeBlocks(to publisher: PassthroughSubject<Block.Header, Never>) async throws {
         _ = try await bchd.subscribeBlocks(to: publisher)
     }
@@ -243,9 +243,10 @@ extension SwiftBCHD {
         
         return subscription
     }
-    
-    // MARK: - {Submit}
-    
+}
+
+// MARK: - {Submit}
+extension SwiftBCHD {
     public func submit(rawTransaction: Data) async throws {
         _ = try await bchd.submit(rawTransaction: rawTransaction)
     }
