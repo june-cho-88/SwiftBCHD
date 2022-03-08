@@ -76,8 +76,8 @@ extension BCHD {
     }
     
     func getBlockHeaders() async throws -> Pb_GetHeadersResponse {
-        var request = Pb_GetHeadersRequest()
-        request.blockLocatorHashes
+        let request = Pb_GetHeadersRequest()
+        
         let response = try client.getHeaders(request, callOptions: .none).response.wait()
         return response
     }

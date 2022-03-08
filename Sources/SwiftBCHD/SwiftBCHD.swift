@@ -3,6 +3,14 @@ import Combine
 import NIO
 
 public struct SwiftBCHD {
+    static let publicServer = [
+        "bchd.greyh.at:8335",
+        "bchd.imaginary.cash:8335",
+        "bchd-mainnet.electroncash.de:8335",
+        "bchd.fountainhead.cash:443",
+        "bchd.sploit.cash:443"
+    ]
+    
     private let bchd: BCHD
     private let eventLoopGroup: EventLoopGroup
     
