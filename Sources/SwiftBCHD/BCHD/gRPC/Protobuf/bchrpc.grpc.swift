@@ -378,7 +378,7 @@ extension Pb_bchrpcClientProtocol {
     )
   }
 
-  /// GetRawAddressTransactions the serialized raw transactions for
+  /// GetRawAddressTransactions returns the serialized raw transactions for
   /// the given address. Offers offset, limit, and from block options.
   ///
   /// **Requires AddressIndex**
@@ -483,7 +483,7 @@ extension Pb_bchrpcClientProtocol {
     )
   }
 
-  /// GetSlpParsedScript returns marshalled object from parsing an slp pubKeyScript 
+  /// GetSlpParsedScript returns marshalled object from parsing an slp pubKeyScript
   /// using goslp package.  This endpoint does not require SlpIndex.
   ///
   /// - Parameters:
@@ -815,7 +815,7 @@ internal protocol Pb_bchrpcProvider: CallHandlerProvider {
   /// **Requires SlpIndex for slp related information **
   func getAddressTransactions(request: Pb_GetAddressTransactionsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Pb_GetAddressTransactionsResponse>
 
-  /// GetRawAddressTransactions the serialized raw transactions for
+  /// GetRawAddressTransactions returns the serialized raw transactions for
   /// the given address. Offers offset, limit, and from block options.
   ///
   /// **Requires AddressIndex**
@@ -845,7 +845,7 @@ internal protocol Pb_bchrpcProvider: CallHandlerProvider {
   /// **Requires SlpIndex**
   func getSlpTokenMetadata(request: Pb_GetSlpTokenMetadataRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Pb_GetSlpTokenMetadataResponse>
 
-  /// GetSlpParsedScript returns marshalled object from parsing an slp pubKeyScript 
+  /// GetSlpParsedScript returns marshalled object from parsing an slp pubKeyScript
   /// using goslp package.  This endpoint does not require SlpIndex.
   func getSlpParsedScript(request: Pb_GetSlpParsedScriptRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Pb_GetSlpParsedScriptResponse>
 

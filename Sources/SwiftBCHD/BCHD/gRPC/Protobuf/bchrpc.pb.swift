@@ -1197,11 +1197,11 @@ struct Pb_CheckSlpTransactionRequest {
   /// item in required_slp_burns property.
   ///
   /// When use_spec_validity_judgement is true, there are three cases where the is_valid response property
-  /// will be returned as valid, instead of invalid, as per the slp specification.  
+  /// will be returned as valid, instead of invalid, as per the slp specification.
   ///   1) inputs > outputs
   ///   2) missing transaction outputs
   ///   3) burned inputs from other tokens
-  /// 
+  ///
   /// required_slp_burns is not used when use_spec_validity_judgement is set to true.
   var useSpecValidityJudgement: Bool = false
 
@@ -2785,6 +2785,102 @@ struct Pb_SlpRequiredBurn {
   fileprivate var _outpoint: Pb_Transaction.Input.Outpoint? = nil
 }
 
+#if swift(>=5.5) && canImport(_Concurrency)
+extension Pb_SlpTokenType: @unchecked Sendable {}
+extension Pb_SlpAction: @unchecked Sendable {}
+extension Pb_GetMempoolInfoRequest: @unchecked Sendable {}
+extension Pb_GetMempoolInfoResponse: @unchecked Sendable {}
+extension Pb_GetMempoolRequest: @unchecked Sendable {}
+extension Pb_GetMempoolResponse: @unchecked Sendable {}
+extension Pb_GetMempoolResponse.TransactionData: @unchecked Sendable {}
+extension Pb_GetMempoolResponse.TransactionData.OneOf_TxidsOrTxs: @unchecked Sendable {}
+extension Pb_GetBlockchainInfoRequest: @unchecked Sendable {}
+extension Pb_GetBlockchainInfoResponse: @unchecked Sendable {}
+extension Pb_GetBlockchainInfoResponse.BitcoinNet: @unchecked Sendable {}
+extension Pb_GetBlockInfoRequest: @unchecked Sendable {}
+extension Pb_GetBlockInfoRequest.OneOf_HashOrHeight: @unchecked Sendable {}
+extension Pb_GetBlockInfoResponse: @unchecked Sendable {}
+extension Pb_GetBlockRequest: @unchecked Sendable {}
+extension Pb_GetBlockRequest.OneOf_HashOrHeight: @unchecked Sendable {}
+extension Pb_GetBlockResponse: @unchecked Sendable {}
+extension Pb_GetRawBlockRequest: @unchecked Sendable {}
+extension Pb_GetRawBlockRequest.OneOf_HashOrHeight: @unchecked Sendable {}
+extension Pb_GetRawBlockResponse: @unchecked Sendable {}
+extension Pb_GetBlockFilterRequest: @unchecked Sendable {}
+extension Pb_GetBlockFilterRequest.OneOf_HashOrHeight: @unchecked Sendable {}
+extension Pb_GetBlockFilterResponse: @unchecked Sendable {}
+extension Pb_GetHeadersRequest: @unchecked Sendable {}
+extension Pb_GetHeadersResponse: @unchecked Sendable {}
+extension Pb_GetTransactionRequest: @unchecked Sendable {}
+extension Pb_GetTransactionResponse: @unchecked Sendable {}
+extension Pb_GetRawTransactionRequest: @unchecked Sendable {}
+extension Pb_GetRawTransactionResponse: @unchecked Sendable {}
+extension Pb_GetAddressTransactionsRequest: @unchecked Sendable {}
+extension Pb_GetAddressTransactionsRequest.OneOf_StartBlock: @unchecked Sendable {}
+extension Pb_GetAddressTransactionsResponse: @unchecked Sendable {}
+extension Pb_GetRawAddressTransactionsRequest: @unchecked Sendable {}
+extension Pb_GetRawAddressTransactionsRequest.OneOf_StartBlock: @unchecked Sendable {}
+extension Pb_GetRawAddressTransactionsResponse: @unchecked Sendable {}
+extension Pb_GetAddressUnspentOutputsRequest: @unchecked Sendable {}
+extension Pb_GetAddressUnspentOutputsResponse: @unchecked Sendable {}
+extension Pb_GetUnspentOutputRequest: @unchecked Sendable {}
+extension Pb_GetUnspentOutputResponse: @unchecked Sendable {}
+extension Pb_GetMerkleProofRequest: @unchecked Sendable {}
+extension Pb_GetMerkleProofResponse: @unchecked Sendable {}
+extension Pb_SubmitTransactionRequest: @unchecked Sendable {}
+extension Pb_SubmitTransactionResponse: @unchecked Sendable {}
+extension Pb_CheckSlpTransactionRequest: @unchecked Sendable {}
+extension Pb_CheckSlpTransactionResponse: @unchecked Sendable {}
+extension Pb_SubscribeTransactionsRequest: @unchecked Sendable {}
+extension Pb_SubscribeBlocksRequest: @unchecked Sendable {}
+extension Pb_GetSlpTokenMetadataRequest: @unchecked Sendable {}
+extension Pb_GetSlpTokenMetadataResponse: @unchecked Sendable {}
+extension Pb_GetSlpParsedScriptRequest: @unchecked Sendable {}
+extension Pb_GetSlpParsedScriptResponse: @unchecked Sendable {}
+extension Pb_GetSlpParsedScriptResponse.OneOf_SlpMetadata: @unchecked Sendable {}
+extension Pb_GetSlpTrustedValidationRequest: @unchecked Sendable {}
+extension Pb_GetSlpTrustedValidationRequest.Query: @unchecked Sendable {}
+extension Pb_GetSlpTrustedValidationResponse: @unchecked Sendable {}
+extension Pb_GetSlpTrustedValidationResponse.ValidityResult: @unchecked Sendable {}
+extension Pb_GetSlpTrustedValidationResponse.ValidityResult.OneOf_ValidityResultType: @unchecked Sendable {}
+extension Pb_GetSlpGraphSearchRequest: @unchecked Sendable {}
+extension Pb_GetSlpGraphSearchResponse: @unchecked Sendable {}
+extension Pb_BlockNotification: @unchecked Sendable {}
+extension Pb_BlockNotification.OneOf_Block: @unchecked Sendable {}
+extension Pb_BlockNotification.TypeEnum: @unchecked Sendable {}
+extension Pb_TransactionNotification: @unchecked Sendable {}
+extension Pb_TransactionNotification.OneOf_Transaction: @unchecked Sendable {}
+extension Pb_TransactionNotification.TypeEnum: @unchecked Sendable {}
+extension Pb_BlockInfo: @unchecked Sendable {}
+extension Pb_Block: @unchecked Sendable {}
+extension Pb_Block.TransactionData: @unchecked Sendable {}
+extension Pb_Block.TransactionData.OneOf_TxidsOrTxs: @unchecked Sendable {}
+extension Pb_Transaction: @unchecked Sendable {}
+extension Pb_Transaction.Input: @unchecked Sendable {}
+extension Pb_Transaction.Input.Outpoint: @unchecked Sendable {}
+extension Pb_Transaction.Output: @unchecked Sendable {}
+extension Pb_MempoolTransaction: @unchecked Sendable {}
+extension Pb_UnspentOutput: @unchecked Sendable {}
+extension Pb_TransactionFilter: @unchecked Sendable {}
+extension Pb_SlpToken: @unchecked Sendable {}
+extension Pb_SlpTransactionInfo: @unchecked Sendable {}
+extension Pb_SlpTransactionInfo.OneOf_TxMetadata: @unchecked Sendable {}
+extension Pb_SlpTransactionInfo.ValidityJudgement: @unchecked Sendable {}
+extension Pb_SlpTransactionInfo.BurnFlags: @unchecked Sendable {}
+extension Pb_SlpV1GenesisMetadata: @unchecked Sendable {}
+extension Pb_SlpV1MintMetadata: @unchecked Sendable {}
+extension Pb_SlpV1SendMetadata: @unchecked Sendable {}
+extension Pb_SlpV1Nft1ChildGenesisMetadata: @unchecked Sendable {}
+extension Pb_SlpV1Nft1ChildSendMetadata: @unchecked Sendable {}
+extension Pb_SlpTokenMetadata: @unchecked Sendable {}
+extension Pb_SlpTokenMetadata.OneOf_TypeMetadata: @unchecked Sendable {}
+extension Pb_SlpTokenMetadata.V1Fungible: @unchecked Sendable {}
+extension Pb_SlpTokenMetadata.V1NFT1Group: @unchecked Sendable {}
+extension Pb_SlpTokenMetadata.V1NFT1Child: @unchecked Sendable {}
+extension Pb_SlpRequiredBurn: @unchecked Sendable {}
+extension Pb_SlpRequiredBurn.OneOf_BurnIntention: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "pb"
@@ -2977,8 +3073,9 @@ extension Pb_GetMempoolResponse.TransactionData: SwiftProtobuf.Message, SwiftPro
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     switch self.txidsOrTxs {
     case .transactionHash?: try {
       guard case .transactionHash(let v)? = self.txidsOrTxs else { preconditionFailure() }
@@ -3144,8 +3241,9 @@ extension Pb_GetBlockInfoRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     switch self.hashOrHeight {
     case .hash?: try {
       guard case .hash(let v)? = self.hashOrHeight else { preconditionFailure() }
@@ -3186,9 +3284,13 @@ extension Pb_GetBlockInfoResponse: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._info {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._info {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3237,8 +3339,9 @@ extension Pb_GetBlockRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     switch self.hashOrHeight {
     case .hash?: try {
       guard case .hash(let v)? = self.hashOrHeight else { preconditionFailure() }
@@ -3283,9 +3386,13 @@ extension Pb_GetBlockResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._block {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._block {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3332,8 +3439,9 @@ extension Pb_GetRawBlockRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     switch self.hashOrHeight {
     case .hash?: try {
       guard case .hash(let v)? = self.hashOrHeight else { preconditionFailure() }
@@ -3423,8 +3531,9 @@ extension Pb_GetBlockFilterRequest: SwiftProtobuf.Message, SwiftProtobuf._Messag
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     switch self.hashOrHeight {
     case .hash?: try {
       guard case .hash(let v)? = self.hashOrHeight else { preconditionFailure() }
@@ -3607,12 +3716,16 @@ extension Pb_GetTransactionResponse: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._transaction {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._transaction {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
-    if let v = self._tokenMetadata {
+    } }()
+    try { if let v = self._tokenMetadata {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3729,6 +3842,10 @@ extension Pb_GetAddressTransactionsRequest: SwiftProtobuf.Message, SwiftProtobuf
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
@@ -3738,9 +3855,6 @@ extension Pb_GetAddressTransactionsRequest: SwiftProtobuf.Message, SwiftProtobuf
     if self.nbFetch != 0 {
       try visitor.visitSingularUInt32Field(value: self.nbFetch, fieldNumber: 3)
     }
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
     switch self.startBlock {
     case .hash?: try {
       guard case .hash(let v)? = self.startBlock else { preconditionFailure() }
@@ -3844,6 +3958,10 @@ extension Pb_GetRawAddressTransactionsRequest: SwiftProtobuf.Message, SwiftProto
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 1)
     }
@@ -3853,9 +3971,6 @@ extension Pb_GetRawAddressTransactionsRequest: SwiftProtobuf.Message, SwiftProto
     if self.nbFetch != 0 {
       try visitor.visitSingularUInt32Field(value: self.nbFetch, fieldNumber: 3)
     }
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
     switch self.startBlock {
     case .hash?: try {
       guard case .hash(let v)? = self.startBlock else { preconditionFailure() }
@@ -4116,9 +4231,13 @@ extension Pb_GetUnspentOutputResponse: SwiftProtobuf.Message, SwiftProtobuf._Mes
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      if let v = _storage._outpoint {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._outpoint {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-      }
+      } }()
       if !_storage._pubkeyScript.isEmpty {
         try visitor.visitSingularBytesField(value: _storage._pubkeyScript, fieldNumber: 2)
       }
@@ -4131,12 +4250,12 @@ extension Pb_GetUnspentOutputResponse: SwiftProtobuf.Message, SwiftProtobuf._Mes
       if _storage._blockHeight != 0 {
         try visitor.visitSingularInt32Field(value: _storage._blockHeight, fieldNumber: 5)
       }
-      if let v = _storage._slpToken {
+      try { if let v = _storage._slpToken {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-      }
-      if let v = _storage._tokenMetadata {
+      } }()
+      try { if let v = _storage._tokenMetadata {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -4217,9 +4336,13 @@ extension Pb_GetMerkleProofResponse: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._block {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._block {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     if !self.hashes.isEmpty {
       try visitor.visitRepeatedBytesField(value: self.hashes, fieldNumber: 2)
     }
@@ -4429,12 +4552,16 @@ extension Pb_SubscribeTransactionsRequest: SwiftProtobuf.Message, SwiftProtobuf.
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._subscribe {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._subscribe {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
-    if let v = self._unsubscribe {
+    } }()
+    try { if let v = self._unsubscribe {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
+    } }()
     if self.includeMempool != false {
       try visitor.visitSingularBoolField(value: self.includeMempool, fieldNumber: 3)
     }
@@ -4693,6 +4820,10 @@ extension Pb_GetSlpParsedScriptResponse: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.parsingError.isEmpty {
       try visitor.visitSingularStringField(value: self.parsingError, fieldNumber: 1)
     }
@@ -4705,9 +4836,6 @@ extension Pb_GetSlpParsedScriptResponse: SwiftProtobuf.Message, SwiftProtobuf._M
     if self.tokenType != .versionNotSet {
       try visitor.visitSingularEnumField(value: self.tokenType, fieldNumber: 4)
     }
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
     switch self.slpMetadata {
     case .v1Genesis?: try {
       guard case .v1Genesis(let v)? = self.slpMetadata else { preconditionFailure() }
@@ -4908,6 +5036,10 @@ extension Pb_GetSlpTrustedValidationResponse.ValidityResult: SwiftProtobuf.Messa
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.prevOutHash.isEmpty {
       try visitor.visitSingularBytesField(value: self.prevOutHash, fieldNumber: 1)
     }
@@ -4923,9 +5055,6 @@ extension Pb_GetSlpTrustedValidationResponse.ValidityResult: SwiftProtobuf.Messa
     if self.tokenType != .versionNotSet {
       try visitor.visitSingularEnumField(value: self.tokenType, fieldNumber: 5)
     }
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
     switch self.validityResultType {
     case .v1TokenAmount?: try {
       guard case .v1TokenAmount(let v)? = self.validityResultType else { preconditionFailure() }
@@ -5086,12 +5215,13 @@ extension Pb_BlockNotification: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.type != .connected {
       try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
     }
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
     switch self.block {
     case .blockInfo?: try {
       guard case .blockInfo(let v)? = self.block else { preconditionFailure() }
@@ -5181,12 +5311,13 @@ extension Pb_TransactionNotification: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.type != .unconfirmed {
       try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
     }
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
     switch self.transaction {
     case .confirmedTransaction?: try {
       guard case .confirmedTransaction(let v)? = self.transaction else { preconditionFailure() }
@@ -5345,9 +5476,13 @@ extension Pb_Block: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._info {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._info {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     if !self.transactionData.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.transactionData, fieldNumber: 2)
     }
@@ -5403,8 +5538,9 @@ extension Pb_Block.TransactionData: SwiftProtobuf.Message, SwiftProtobuf._Messag
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     switch self.txidsOrTxs {
     case .transactionHash?: try {
       guard case .transactionHash(let v)? = self.txidsOrTxs else { preconditionFailure() }
@@ -5508,6 +5644,10 @@ extension Pb_Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if !_storage._hash.isEmpty {
         try visitor.visitSingularBytesField(value: _storage._hash, fieldNumber: 1)
       }
@@ -5538,9 +5678,9 @@ extension Pb_Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       if !_storage._blockHash.isEmpty {
         try visitor.visitSingularBytesField(value: _storage._blockHash, fieldNumber: 12)
       }
-      if let v = _storage._slpTransactionInfo {
+      try { if let v = _storage._slpTransactionInfo {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
-      }
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -5603,12 +5743,16 @@ extension Pb_Transaction.Input: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.index != 0 {
       try visitor.visitSingularUInt32Field(value: self.index, fieldNumber: 1)
     }
-    if let v = self._outpoint {
+    try { if let v = self._outpoint {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }
+    } }()
     if !self.signatureScript.isEmpty {
       try visitor.visitSingularBytesField(value: self.signatureScript, fieldNumber: 3)
     }
@@ -5624,9 +5768,9 @@ extension Pb_Transaction.Input: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if !self.address.isEmpty {
       try visitor.visitSingularStringField(value: self.address, fieldNumber: 7)
     }
-    if let v = self._slpToken {
+    try { if let v = self._slpToken {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -5713,6 +5857,10 @@ extension Pb_Transaction.Output: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.index != 0 {
       try visitor.visitSingularUInt32Field(value: self.index, fieldNumber: 1)
     }
@@ -5731,9 +5879,9 @@ extension Pb_Transaction.Output: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.disassembledScript.isEmpty {
       try visitor.visitSingularStringField(value: self.disassembledScript, fieldNumber: 6)
     }
-    if let v = self._slpToken {
+    try { if let v = self._slpToken {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -5779,9 +5927,13 @@ extension Pb_MempoolTransaction: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._transaction {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._transaction {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     if self.addedTime != 0 {
       try visitor.visitSingularInt64Field(value: self.addedTime, fieldNumber: 2)
     }
@@ -5841,9 +5993,13 @@ extension Pb_UnspentOutput: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._outpoint {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._outpoint {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     if !self.pubkeyScript.isEmpty {
       try visitor.visitSingularBytesField(value: self.pubkeyScript, fieldNumber: 2)
     }
@@ -5856,9 +6012,9 @@ extension Pb_UnspentOutput: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if self.blockHeight != 0 {
       try visitor.visitSingularInt32Field(value: self.blockHeight, fieldNumber: 5)
     }
-    if let v = self._slpToken {
+    try { if let v = self._slpToken {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -6101,6 +6257,10 @@ extension Pb_SlpTransactionInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.slpAction != .nonSlp {
       try visitor.visitSingularEnumField(value: self.slpAction, fieldNumber: 1)
     }
@@ -6116,9 +6276,6 @@ extension Pb_SlpTransactionInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.burnFlags.isEmpty {
       try visitor.visitPackedEnumField(value: self.burnFlags, fieldNumber: 5)
     }
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
     switch self.txMetadata {
     case .v1Genesis?: try {
       guard case .v1Genesis(let v)? = self.txMetadata else { preconditionFailure() }
@@ -6469,15 +6626,16 @@ extension Pb_SlpTokenMetadata: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.tokenID.isEmpty {
       try visitor.visitSingularBytesField(value: self.tokenID, fieldNumber: 1)
     }
     if self.tokenType != .versionNotSet {
       try visitor.visitSingularEnumField(value: self.tokenType, fieldNumber: 2)
     }
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
     switch self.typeMetadata {
     case .v1Fungible?: try {
       guard case .v1Fungible(let v)? = self.typeMetadata else { preconditionFailure() }
@@ -6738,18 +6896,19 @@ extension Pb_SlpRequiredBurn: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if let v = self._outpoint {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._outpoint {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    }
+    } }()
     if !self.tokenID.isEmpty {
       try visitor.visitSingularBytesField(value: self.tokenID, fieldNumber: 2)
     }
     if self.tokenType != .versionNotSet {
       try visitor.visitSingularEnumField(value: self.tokenType, fieldNumber: 3)
     }
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every case branch when no optimizations are
-    // enabled. https://github.com/apple/swift-protobuf/issues/1034
     switch self.burnIntention {
     case .amount?: try {
       guard case .amount(let v)? = self.burnIntention else { preconditionFailure() }
